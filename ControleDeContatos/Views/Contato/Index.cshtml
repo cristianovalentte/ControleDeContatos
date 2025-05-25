@@ -13,7 +13,7 @@
 	</div>
 
 	<h1 class="display-4 mt-4">Listagem de Contatos:</h1>
-	<table class="table">
+	<table class="table" id="tableContatos">
 		<thead>
 			<tr>
 				<th scope="col">#</th>
@@ -127,7 +127,6 @@
 
 					document.getElementById('nomeContatoModal').textContent = contatoNome;
 
-					// IMPORTANTE: Remover o href para não redirecionar automaticamente
 					document.getElementById('btnConfirmarDelete').removeAttribute('href');
 				});
 			}
@@ -145,7 +144,6 @@
 					const modalSucesso = new bootstrap.Modal(document.getElementById('modalSucesso'));
 					modalSucesso.show();
 
-					// Redireciona após 2 segundos para apagar o contato
 					setTimeout(() => {
 						window.location.href = `/Contato/Apagar/${contatoId}`;
 					}, 2000);
