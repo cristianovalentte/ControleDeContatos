@@ -1,6 +1,6 @@
 # 📒 Projeto de Gerenciamento de Contatos - ASP.NET Core MVC
 
-Aplicação desenvolvida com **C#**, **ASP.NET Core MVC**, **Razor**, **SQL Server**, **HTML**, **CSS**, **JavaScript** e **Bootstrap**.  
+Aplicação desenvolvida com **C#**, **ASP.NET Core MVC**, **SQL Server**, **HTML**, **CSS**, **JavaScript** e **Bootstrap**.  
 O objetivo é praticar e evoluir habilidades em desenvolvimento **full stack** com .NET, criando um sistema simples e funcional de gerenciamento de contatos.
 
 ---
@@ -10,9 +10,7 @@ O objetivo é praticar e evoluir habilidades em desenvolvimento **full stack** c
 - ✅ Cadastro de novos contatos  
 - ✅ Listagem de contatos  
 - ✅ Edição de contatos existentes  
-- ✅ Exclusão com confirmação via modal  
-- ✅ Validação de dados  
-- ✅ Alertas de sucesso e erro com **AlertBox.js**  
+- ✅ Validação de dados   
 - ✅ Integração com banco de dados **SQL Server**
 
 ---
@@ -27,7 +25,6 @@ O objetivo é praticar e evoluir habilidades em desenvolvimento **full stack** c
 - HTML5 & CSS3
 - JavaScript (ES6)
 - Bootstrap 5
-- AlertBox.js
 
 ---
 
