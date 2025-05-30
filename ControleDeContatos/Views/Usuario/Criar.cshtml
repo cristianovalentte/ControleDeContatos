@@ -1,0 +1,43 @@
+﻿@using ControleDeContatos.Views.Contato.Enums
+@model UsuarioModel;
+@{
+	ViewData["Title"] = "Criar Usuario";
+}
+
+<div class="text-center">
+
+	<h1 class="display-4 mt-4">Cadastrar Contato:</h1>
+
+</div>
+
+<div>
+	<form asp-controller="Usuario" asp-action="Criar" method="post">
+		<div class="mb-3">
+			<label for="nome" class="form-label">Nome</label>
+			<input type="text" asp-for="Nome" class="form-control" required placeholder="Digite o nome do contato">
+		</div>
+		<div class="mb-3">
+			<label for="login" class="form-label">E-Mail</label>
+			<input type="text" asp-for="Login" class="form-control" required placeholder="Digite o e-mail do contato">
+		</div>
+		<div class="mb-3">
+			<label for="email" class="form-label">Celular</label>
+			<input type="email" asp-for="Email" class="form-control" required placeholder="Digite o celular do contato">
+		</div>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Perfil</label>
+			<select asp-for="Perfil" class="form-control">
+				<option value="0">Escolha</option>
+				<option value="@PerfilEnum.Admin">Administrador</option>
+				<option value="@PerfilEnum.Usuario">Usuário</option>
+			</select>
+        </div>
+		<div class="mb-3">
+			<label for="senha" class="form-label">Senha</label>
+			<input type="password" asp-for="Senha" class="form-control" required placeholder="Digite o celular do contato">
+		</div>
+
+		<button type="submit" class="btn btn-primary">Adicionar</button>
+		<a class="btn btn-secondary" asp-controller="Usuario" asp-action="Index" role="button">Voltar</a>
+	</form>
+</div>

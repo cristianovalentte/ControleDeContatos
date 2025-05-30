@@ -1,0 +1,157 @@
+﻿@model List<UsuarioModel>;
+@{
+    ViewData["Title"] = "Listagem de usuarios";
+}
+
+@{
+	int contador = 1;
+}
+
+<div class="text-center" >
+
+	<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+		<a class="btn btn-primary" role="button" asp-controller="Contato" asp-action="Criar" >Adicionar um novo Usúário</a>
+	</div>
+
+	<h1 class="display-4 mt-4">Listagem de Usuários:</h1>
+	<table class="table" id="tableUsuarios">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Loin</th>
+				<th scope="col">E-Mail</th>
+				<th scope="col">Data de Cadstro</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (UsuarioModel usuario in Model)
+                {
+                    <tr>
+						<th scope="row">@contador</th>
+                        <td>@usuario.Nome</td>
+						<td>@usuario.Login</td>
+						<td>@usuario.Email</td>
+						<td>@usuario.DataCadastro</td>
+                        <td>
+                            <div class="btn-group" role="group">
+								<a role="button" class="btn btn-primary" asp-route-id="@usuario.Id" asp-controller="Usuario" asp-action="Editar">Editar</a>
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#apagarConfirmacao" data-contato-id="@usuario.Id" data-contato-nome="@usuario.Nome">
+                                    Apagar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+					contador++;
+                }
+            }
+		</tbody>
+	</table>
+
+	<!-- Modal apagarConfirmacao -->
+	<div class="modal fade" id="apagarConfirmacao" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação de apagar o contato</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<p>Realmente deseja apagar o contato <strong id="nomeContatoModal"></strong>?</p>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar Exclusão</button>
+					<a id="btnConfirmarDelete" class="btn btn-danger">Apagar Contato</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@if (TempData["MensagemSucesso"] != null)
+	{
+		<!--Modal Sucesso-->
+		<div class="modal" id="modalSucesso" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body alert alert-success" role="alert">
+						@TempData["MensagemSucesso"]
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
+	@if(TempData["MensagemErro"]!= null)
+	{
+		<!-- Modal de erro -->
+		<div class="modal fade" id="modalErro" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title text-danger">Erro</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+					</div>
+					<div class="modal-body alert alert-danger" role="alert">
+						@TempData["MensagemErro"]
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
+
+
+    @section Scripts {
+
+        <script>
+
+				 const modalApagar = document.getElementById('apagarConfirmacao');
+			const btnConfirmarDelete = document.getElementById('btnConfirmarDelete');
+			let contatoId = 0;
+
+			// Quando o modal de confirmação for aberto, pega os dados do botão clicado
+			if (modalApagar) {
+				modalApagar.addEventListener('show.bs.modal', function (event) {
+					const button = event.relatedTarget;
+					contatoId = button.getAttribute('data-contato-id');
+					const contatoNome = button.getAttribute('data-contato-nome');
+
+					document.getElementById('nomeContatoModal').textContent = contatoNome;
+
+					document.getElementById('btnConfirmarDelete').removeAttribute('href');
+				});
+			}
+
+			// Ao clicar em "Apagar Contato"
+			if (btnConfirmarDelete) {
+				btnConfirmarDelete.addEventListener('click', function (e) {
+					e.preventDefault(); // impede qualquer redirecionamento automático
+
+					// Fecha o modal de confirmação
+					const modal = bootstrap.Modal.getInstance(modalApagar);
+					modal.hide();
+
+					// Mostra o modal de sucesso
+					const modalSucesso = new bootstrap.Modal(document.getElementById('modalSucesso'));
+					modalSucesso.show();
+
+					setTimeout(() => {
+						window.location.href = `/Contato/Apagar/${contatoId}`;
+					}, 2000);
+				});
+			}
+        </script>
+    }
+</div>
