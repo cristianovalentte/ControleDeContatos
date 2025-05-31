@@ -1,4 +1,4 @@
-﻿@model List<UsuarioModel>;
+﻿@model List<UsuarioModel>
 @{
     ViewData["Title"] = "Listagem de usuarios";
 }
@@ -10,7 +10,7 @@
 <div class="text-center" >
 
 	<div class="d-grid gap-2 d-md-flex justify-content-md-start">
-		<a class="btn btn-primary" role="button" asp-controller="Contato" asp-action="Criar" >Adicionar um novo Usúário</a>
+		<a class="btn btn-primary" role="button" asp-controller="Usuario" asp-action="Criar" >Adicionar um novo Usuário</a>
 	</div>
 
 	<h1 class="display-4 mt-4">Listagem de Usuários:</h1>
@@ -21,6 +21,7 @@
 				<th scope="col">Nome</th>
 				<th scope="col">Loin</th>
 				<th scope="col">E-Mail</th>
+				<th scope="col">Login</th>
 				<th scope="col">Data de Cadstro</th>
 				<th scope="col"></th>
 			</tr>
@@ -35,11 +36,12 @@
                         <td>@usuario.Nome</td>
 						<td>@usuario.Login</td>
 						<td>@usuario.Email</td>
+						<td>@(usuario.Perfil == ControleDeContatos.Views.Contato.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
 						<td>@usuario.DataCadastro</td>
                         <td>
                             <div class="btn-group" role="group">
 								<a role="button" class="btn btn-primary" asp-route-id="@usuario.Id" asp-controller="Usuario" asp-action="Editar">Editar</a>
-								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#apagarConfirmacao" data-contato-id="@usuario.Id" data-contato-nome="@usuario.Nome">
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#apagarConfirmacaoUsuario" data-usuario-id="@usuario.Id" data-usuario-nome="@usuario.Nome">
                                     Apagar
                                 </button>
                             </div>
@@ -52,21 +54,21 @@
 	</table>
 
 	<!-- Modal apagarConfirmacao -->
-	<div class="modal fade" id="apagarConfirmacao" tabindex="-1">
+	<div class="modal fade" id="apagarConfirmacaoUsuario" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação de apagar o contato</h1>
+					<h1 class="modal-title fs-5" >Confirmação de apagar o usuário</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 
-					<p>Realmente deseja apagar o contato <strong id="nomeContatoModal"></strong>?</p>
+					<p>Realmente deseja apagar o usuário <strong id="nomeUsuarioModal"></strong>?</p>
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar Exclusão</button>
-					<a id="btnConfirmarDelete" class="btn btn-danger">Apagar Contato</a>
+					<a id="btnConfirmarDelete" class="btn btn-danger">Apagar usuário</a>
 				</div>
 			</div>
 		</div>
@@ -117,24 +119,24 @@
 
         <script>
 
-				 const modalApagar = document.getElementById('apagarConfirmacao');
+				 const modalApagar = document.getElementById('apagarConfirmacaoUsuario');
 			const btnConfirmarDelete = document.getElementById('btnConfirmarDelete');
-			let contatoId = 0;
+			let usuarioId = 0;
 
 			// Quando o modal de confirmação for aberto, pega os dados do botão clicado
 			if (modalApagar) {
 				modalApagar.addEventListener('show.bs.modal', function (event) {
 					const button = event.relatedTarget;
-					contatoId = button.getAttribute('data-contato-id');
-					const contatoNome = button.getAttribute('data-contato-nome');
+					usuarioId = button.getAttribute('data-usuario-id');
+					const usuarioNome = button.getAttribute('data-usuario-nome');
 
-					document.getElementById('nomeContatoModal').textContent = contatoNome;
+					document.getElementById('nomeUsuarioModal').textContent = usuarioNome;
 
 					document.getElementById('btnConfirmarDelete').removeAttribute('href');
 				});
 			}
 
-			// Ao clicar em "Apagar Contato"
+			// Ao clicar em "Apagar usuário"
 			if (btnConfirmarDelete) {
 				btnConfirmarDelete.addEventListener('click', function (e) {
 					e.preventDefault(); // impede qualquer redirecionamento automático
@@ -148,8 +150,8 @@
 					modalSucesso.show();
 
 					setTimeout(() => {
-						window.location.href = `/Contato/Apagar/${contatoId}`;
-					}, 2000);
+						window.location.href = `/Usuario/Apagar/${usuarioId}`;
+					}, 100);
 				});
 			}
         </script>
