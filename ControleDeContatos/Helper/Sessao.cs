@@ -9,7 +9,7 @@ namespace ControleDeContatos.Helper
     public class Sessao : ISessao
     {
         private readonly IHttpContextAccessor _httpContext;
-        private Sessao(IHttpContextAccessor httpContext)
+        public Sessao(IHttpContextAccessor httpContext)
         {
             _httpContext = httpContext;
         }
