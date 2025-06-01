@@ -1,8 +1,10 @@
-﻿@Model LoginViewModel
+﻿@model LoginModel
 @{
     Layout = "_LayoutLogin";
     ViewData["Title"] = "Login";
 }
+
+
 
 <form asp-controller="Login" asp-action="Entrar" method="post">
     <div class="container py-5 h-100">
@@ -15,20 +17,24 @@
 
                             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                             <p class="text-white-50 mb-5">Entre com seu login e senha</p>
+                            @if (ViewBag.MensagemErro != null)
+                            {
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    @ViewBag.MensagemErro 
+                                </div>
+                            }
 
                             <div data-mdb-input-init class="form-outline form-white mb-4">
-                                <label class="form-label">Login</label>
-                                <input type="text" id="login" for="login" required class="form-control form-control-lg" />
+                                <label for="login" class="form-label">Login</label>
+                                <input type="text" asp-for="Login" id="login" required class="form-control" />
 
                             </div>
 
                             <div data-mdb-input-init class="form-outline form-white mb-4">
-                                <label class="form-label">Senha</label>
-                                <input type="password" required for="senha" class="form-control form-control-lg" />
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" required asp-for="Senha" class="form-control" />
 
                             </div>
-
-                            <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Esqueceu a senha?</a></p>
 
                             <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Entrar</button>
 

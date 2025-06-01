@@ -1,10 +1,17 @@
 ﻿using ControleDeContatos.Models;
+using ControleDeContatos.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace ControleDeContatos.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        public LoginController(IUsuarioRepositorio usuarioRepositorio )
+        {
+            _usuarioRepositorio = usuarioRepositorio;
+        }
         public IActionResult Index()
         {
             return View();
@@ -17,15 +24,24 @@ namespace ControleDeContatos.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index", "Home");
+                    UsuarioModel usuario = _usuarioRepositorio.BuscarPorLogin(loginModel.Login);
+
+                    if (usuario != null && usuario.SenhaValida(loginModel.Senha))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    ViewBag.MensagemErro = "Login ou senha inválidos.";
                 }
+
                 return View("Index");
             }
-            catch(Exception erro)
+            catch (Exception ex)
             {
-                TempData["MensagemErro"] = $"Ops, não conseguimos realizar seu login, tente novamente, detalhe do erro:{erro.Message}";
-                return RedirectToAction("Index");
+                ViewBag.MensagemErro = $"Erro ao tentar fazer login: {ex.Message}";
+                return View("Index");
             }
         }
+
     }
 }
