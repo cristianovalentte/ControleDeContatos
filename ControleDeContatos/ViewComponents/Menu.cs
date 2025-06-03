@@ -12,14 +12,12 @@ namespace ControleDeContatos.ViewComponents
 
             if (string.IsNullOrEmpty(sessaoUsuario))
             {
-                return null;
-            }
-            else
-            {
-                UsuarioModel usuario = JsonConvert.DeserializeObject<UsuarioModel>(sessaoUsuario);
+                return Content(""); // Ou crie uma View de menu genérico, se preferir
             }
 
-                return View();
+            UsuarioModel usuario = JsonConvert.DeserializeObject<UsuarioModel>(sessaoUsuario);
+
+            return View(usuario); // Passa o modelo para a view
         }
     }
 }
