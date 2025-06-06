@@ -1,4 +1,4 @@
-﻿using ControleDeContatos.Views.Contato.Enums;
+﻿using ControleDeContatos.Enums;
 
 namespace ControleDeContatos.Models
 {

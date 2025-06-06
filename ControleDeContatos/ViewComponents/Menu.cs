@@ -8,16 +8,17 @@ namespace ControleDeContatos.ViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string sessaoUsuario = HttpContext.Session.GetString("sessaoUsuario");
+            string sessaoUsuario = HttpContext.Session.GetString("SessaoUsuarioLogado");
 
-            if (string.IsNullOrEmpty(sessaoUsuario))
+            UsuarioModel usuario = null;
+
+            if (!string.IsNullOrEmpty(sessaoUsuario))
             {
-                return Content(""); // Ou crie uma View de menu genérico, se preferir
+                usuario = JsonConvert.DeserializeObject<UsuarioModel>(sessaoUsuario);
             }
 
-            UsuarioModel usuario = JsonConvert.DeserializeObject<UsuarioModel>(sessaoUsuario);
-
-            return View(usuario); // Passa o modelo para a view
+            return View("Default", usuario);
         }
     }
+
 }

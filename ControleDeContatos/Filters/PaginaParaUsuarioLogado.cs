@@ -1,4 +1,5 @@
-﻿using ControleDeContatos.Models;
+﻿using ControleDeContatos.Enums;
+using ControleDeContatos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -9,7 +10,7 @@ namespace ControleDeContatos.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            string sessaoUsuario = context.HttpContext.Session.GetString("sessaoUsuarioLogado");
+            string sessaoUsuario = context.HttpContext.Session.GetString("SessaoUsuarioLogado");
 
             if (string.IsNullOrEmpty(sessaoUsuario))
             {
@@ -32,7 +33,7 @@ namespace ControleDeContatos.Filters
                             { "action", "Index" }
                         });
                     }
-                    if(usuario.Perfil != Views.Contato.Enums.PerfilEnum.Admin)
+                    if(usuario.Perfil != PerfilEnum.Admin)
                     {
                         context.Result = new RedirectToRouteResult(new RouteValueDictionary
                         {

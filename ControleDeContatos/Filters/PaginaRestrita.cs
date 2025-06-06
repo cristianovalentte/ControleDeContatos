@@ -9,7 +9,7 @@ namespace ControleDeContatos.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            string sessaoUsuario = context.HttpContext.Session.GetString("sessaoUsuarioLogado");
+            string sessaoUsuario = context.HttpContext.Session.GetString("SessaoUsuarioLogado");
 
             if (string.IsNullOrEmpty(sessaoUsuario))
             {

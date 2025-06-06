@@ -1,4 +1,4 @@
-﻿namespace ControleDeContatos.Views.Contato.Enums
+﻿namespace ControleDeContatos.Enums
 {
     public enum PerfilEnum
     {
