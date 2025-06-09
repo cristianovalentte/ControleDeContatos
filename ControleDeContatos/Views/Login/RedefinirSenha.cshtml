@@ -1,12 +1,12 @@
-﻿@model LoginModel
+﻿@model RedefinirSenhaModel
 @{
     Layout = "_LayoutLogin";
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Redefinir Senha";
 }
 
 
 
-<form asp-controller="Login" asp-action="Entrar" method="post">
+<form asp-controller="Login" asp-action="EnivarLinkRedefinirSenha" method="post">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -20,7 +20,7 @@
                             @if (ViewBag.MensagemErro != null)
                             {
                                 <div class="alert alert-danger mt-2" role="alert">
-                                    @ViewBag.MensagemErro 
+                                    @ViewBag.MensagemErro
                                 </div>
                             }
 
@@ -31,12 +31,13 @@
                             </div>
 
                             <div data-mdb-input-init class="form-outline form-white mb-4">
-                                <label for="senha" class="form-label">Senha</label>
-                                <input type="password" required asp-for="Senha" class="form-control" />
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" required asp-for="Email" class="form-control" />
 
                             </div>
-                            <p class="mb-4 text-sm-start mx-auto"> Esqueceu sua senha? <a asp-action="RedefinirSenha" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Redefinir minha senha</a></p>
-                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Entrar</button>
+                            
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Redefinir a Senha</button>
+                            <a class="btn btn-secondary" asp-controller="Index" asp-action="Login" role="button">Voltar</a>
 
                         </div>
 
