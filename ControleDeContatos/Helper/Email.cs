@@ -37,6 +37,7 @@ namespace ControleDeContatos.Helper
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
+                return true;
             }
             catch (Exception ex)
             {                
